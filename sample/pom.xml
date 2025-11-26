@@ -28,7 +28,9 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<docker-image-prefix>docker</docker-image-prefix>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -43,11 +45,36 @@
 	</dependencies>
 
 	<build>
+	<finalName>sample</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.23.0</version>
+				<configuration>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<buildArgs>
+						<JAR_FILE_NAME>${project.build.finalName}</JAR_FILE_NAME>
+					</buildArgs>
+					<verbose>true</verbose>
+					<images>
+						<image>
+					<name>${docker-image-prefix}/${project.artifactId}</name>
+							<build>
+							<dockerFile>Dockerfile</dockerFile>
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
