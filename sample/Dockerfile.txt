@@ -1,5 +1,5 @@
 FROM java:8
 ARG JAR_FILE_NAME
-ADD /maven/${JAR_FILE_NAME}.jar sample-0.0.1-SNAPSHOT
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=container","-jar","/sample-0.0.1-SNAPSHOT"]
-EXPOSE 8080
+ADD /maven/${JAR_FILE_NAME}.jar sample
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=container","-jar","/sample"]
+EXPOSE 8000
